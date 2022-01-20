@@ -1,0 +1,38 @@
+version: '3.3'
+
+services:
+  db:
+    # image: mcr.microsoft.com/mssql/server:2019-latest
+    image: minkov/test_db:latest
+    container_name: db_instance
+    build:
+      context: .
+      dockerfile: ./db/Dockerfile
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: 1123QwER
+      ACCEPT_EULA: "Y"
+    restart: always
+    # volumes:
+    #   - ./sql_server/data:/var/opt/mssql/data
+    #   - ./sql_server/log:/var/opt/mssql/log
+    #   - ./sql_server/secrets:/var/opt/mssql/secrets
+  app:
+    image: minkov/test_app:latest
+    container_name: app_instance
+    ports:
+      - "7150:80"
+    depends_on:
+      - db
+    links:
+      - db
+  tests:
+    image: tests
+    container_name: tests_instance
+    network_mode: host
+    build:
+      context: .
+      dockerfile: ./test/Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
