@@ -7,7 +7,7 @@ services:
     container_name: db_instance
     build:
       context: .
-      dockerfile: ./db/Dockerfile
+      dockerfile: db/Dockerfile
     ports:
       - "1433:1433"
     environment:
@@ -33,6 +33,7 @@ services:
     network_mode: host
     build:
       context: .
-      dockerfile: ./test/Dockerfile
+      dockerfile: test/Dockerfile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock 
+      - ./restore:/queries/restore

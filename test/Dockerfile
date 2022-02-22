@@ -79,5 +79,9 @@ COPY ./docker-compose.yml /src/docker-compose.yml
 
 COPY ./test /src/test
 
+# RUN apt update -y && apt upgrade -y && apt install -y dos2unix
+
+# RUN dos2unix -n /queries/restore/restore.sh /queries/restore/restore.sh
+
 CMD yarn run test
 # CMD tail -f /dev/null

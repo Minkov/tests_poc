@@ -18,7 +18,7 @@ const setupDb = () => compose
     })
     .then(() => {
         console.log(' --- running restore ---');
-        return compose.exec('db', 'bash /queries/restore/restore.sh');
+        return compose.exec('db', '/bin/bash /queries/restore/restore.sh');
     })
     .then(() => {
         console.log(' --- complete restore ---');
