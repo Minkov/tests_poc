@@ -1,3 +1,5 @@
+import { dropDb, setupDb } from "./test/app";
+
 export const config: WebdriverIO.Config = {
     autoCompileOpts: {
         autoCompile: true,
@@ -109,14 +111,16 @@ export const config: WebdriverIO.Config = {
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)
      */
-    // beforeHook: function (test, context) {
-    // },
+    beforeHook: function (test, context) {
+        return setupDb();        
+    },
     /**
      * Hook that gets executed _after_ a hook within the suite starts (e.g. runs after calling
      * afterEach in Mocha)
      */
-    // afterHook: function (test, context, { error, result, duration, passed, retries }) {
-    // },
+    afterHook: function (test, context, { error, result, duration, passed, retries }) {
+        dropDb();
+    },
     /**
      * Function to be executed after a test (in Mocha/Jasmine only)
      * @param {Object}  test             test object
